@@ -1,41 +1,5 @@
 #!/usr/bin/env bash
-
-# rmate
-# Copyright (C) 2011-present by Harald Lapp <harald@octris.org>
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-#
-# This script can be found at:
-# https://github.com/aurora/rmate
-#
-
-#
-# This script is a pure bash compatible shell script implementing remote
-# textmate functionality
-#
-
-#
-# Thanks very much to all users and contributors! All bug-reports,
-# feature-requests, patches, etc. are greatly appreciated! :-)
-#
-
-# init
-#
-version="1.0.2"
-version_date="2019-04-08"
-version_string="rmate-sh $version ($version_date)"
+version_string="rmate-sh 2019-04-08"
 
 # determine hostname
 function hostname_command(){
@@ -96,27 +60,6 @@ nowait=true
 force=false
 success=false
 
-# process command-line parameters
-#
-function showusage {
-    echo "usage: $(basename $0) [arguments] [--] file-path  edit specified file
-   or: $(basename $0) [arguments] -          read text from stdin
-
--H, --host HOST  Connect to HOST. Use 'auto' to detect the host from
-                 SSH. Defaults to $host.
--p, --port PORT  Port number to use for connection. Defaults to $port.
--w, --[no-]wait  Wait for file to be closed by TextMate.
--l, --line LINE  Place caret on line number after loading file.
-+N               Alias for --line, if N is a number (eg.: +5).
--m, --name NAME  The display name shown in TextMate.
--t, --type TYPE  Treat file as having specified type.
--n, --new        Open in a new window (Sublime Text).
--f, --force      Open even if file is not writable.
--v, --verbose    Verbose logging messages.
--h, --help       Display this usage information.
-    --version    Show version and exit.
-"
-}
 
 function log {
     if [[ $verbose = true ]]; then
@@ -218,10 +161,6 @@ while [[ "$1" != "" ]]; do
             echo "$version_string"
             exit 0
             ;;
-        -h|-\?|--help)
-            showusage
-            exit 0
-            ;;
         +[0-9][0-9]*)
             selections+=(${1:1})
             ;;
@@ -259,11 +198,6 @@ if [ "${filepaths[*]}" = "" ]; then
         esac
     fi
 fi
-
-
-#------------------------------------------------------------
-# main
-#------------------------------------------------------------
 
 function open_file {
     local index="$1"
